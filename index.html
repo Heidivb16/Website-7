@@ -977,6 +977,11 @@
                         <p>Active Friends</p>
                     </div>
                 </div>
+                
+                <div class="recommendation-box" style="margin-top: 20px;">
+                    <h3>💡 Quick Tip</h3>
+                    <p>Your nutrition recommendations update automatically based on your profile and recent workouts. Check the <strong>Nutrition Tracker</strong> tab for personalized calorie goals!</p>
+                </div>
             </div>
 
             <div class="card">
@@ -1517,7 +1522,7 @@
         // Nutrition tracking
         let foodLog = {};
         let dailyMacros = { protein: 0, carbs: 0, fats: 0 };
-        let nutritionGoals = { daily: 2200, weekly: 15400, monthly: 66000 };
+        let nutritionGoals = { daily: 2200, weekly: 15400, monthly: 66000, customSet: false };
         
         // Custom goals
         let customWaterGoals = { daily: 2000, weekly: 14, monthly: 60 };
@@ -1527,22 +1532,47 @@
         const foodDatabase = {
             'pizza': { calories: 285, protein: 12, carbs: 36, fats: 10, serving: 'slice' },
             'burger': { calories: 540, protein: 25, carbs: 45, fats: 25, serving: 'burger' },
+            'hamburger': { calories: 540, protein: 25, carbs: 45, fats: 25, serving: 'burger' },
+            'cheeseburger': { calories: 590, protein: 28, carbs: 46, fats: 28, serving: 'burger' },
             'salad': { calories: 150, protein: 8, carbs: 15, fats: 8, serving: 'bowl' },
             'chicken': { calories: 165, protein: 31, carbs: 0, fats: 3.6, serving: '100g' },
+            'chicken breast': { calories: 165, protein: 31, carbs: 0, fats: 3.6, serving: '100g' },
             'rice': { calories: 130, protein: 2.7, carbs: 28, fats: 0.3, serving: 'cup' },
+            'white rice': { calories: 130, protein: 2.7, carbs: 28, fats: 0.3, serving: 'cup' },
+            'brown rice': { calories: 110, protein: 2.6, carbs: 23, fats: 0.9, serving: 'cup' },
             'pasta': { calories: 220, protein: 8, carbs: 43, fats: 1.3, serving: 'cup' },
-            'eggs': { calories: 155, protein: 13, carbs: 1.1, fats: 11, serving: '2 eggs' },
+            'spaghetti': { calories: 220, protein: 8, carbs: 43, fats: 1.3, serving: 'cup' },
+            'egg': { calories: 78, protein: 6.5, carbs: 0.6, fats: 5.5, serving: 'egg' },
+            'eggs': { calories: 78, protein: 6.5, carbs: 0.6, fats: 5.5, serving: 'egg' },
             'banana': { calories: 105, protein: 1.3, carbs: 27, fats: 0.4, serving: 'banana' },
             'apple': { calories: 95, protein: 0.5, carbs: 25, fats: 0.3, serving: 'apple' },
+            'orange': { calories: 62, protein: 1.2, carbs: 15, fats: 0.2, serving: 'orange' },
             'sandwich': { calories: 350, protein: 15, carbs: 40, fats: 12, serving: 'sandwich' },
             'protein shake': { calories: 160, protein: 30, carbs: 5, fats: 2, serving: 'shake' },
+            'shake': { calories: 160, protein: 30, carbs: 5, fats: 2, serving: 'shake' },
             'yogurt': { calories: 150, protein: 12, carbs: 17, fats: 4, serving: 'cup' },
+            'greek yogurt': { calories: 100, protein: 17, carbs: 6, fats: 0.7, serving: 'cup' },
             'oatmeal': { calories: 150, protein: 5, carbs: 27, fats: 3, serving: 'cup' },
+            'oats': { calories: 150, protein: 5, carbs: 27, fats: 3, serving: 'cup' },
             'steak': { calories: 271, protein: 25, carbs: 0, fats: 19, serving: '100g' },
+            'beef': { calories: 271, protein: 25, carbs: 0, fats: 19, serving: '100g' },
             'fish': { calories: 206, protein: 22, carbs: 0, fats: 12, serving: '100g' },
+            'salmon': { calories: 208, protein: 20, carbs: 0, fats: 13, serving: '100g' },
+            'tuna': { calories: 132, protein: 28, carbs: 0, fats: 1.3, serving: '100g' },
             'broccoli': { calories: 55, protein: 3.7, carbs: 11, fats: 0.6, serving: 'cup' },
+            'carrots': { calories: 52, protein: 1.2, carbs: 12, fats: 0.3, serving: 'cup' },
+            'spinach': { calories: 7, protein: 0.9, carbs: 1.1, fats: 0.1, serving: 'cup' },
             'sweet potato': { calories: 103, protein: 2.3, carbs: 24, fats: 0.2, serving: 'potato' },
-            'avocado': { calories: 240, protein: 3, carbs: 13, fats: 22, serving: 'avocado' }
+            'potato': { calories: 163, protein: 4.3, carbs: 37, fats: 0.2, serving: 'potato' },
+            'avocado': { calories: 240, protein: 3, carbs: 13, fats: 22, serving: 'avocado' },
+            'bread': { calories: 79, protein: 2.7, carbs: 15, fats: 1, serving: 'slice' },
+            'toast': { calories: 79, protein: 2.7, carbs: 15, fats: 1, serving: 'slice' },
+            'peanut butter': { calories: 188, protein: 8, carbs: 7, fats: 16, serving: 'tbsp' },
+            'almond': { calories: 164, protein: 6, carbs: 6, fats: 14, serving: 'oz' },
+            'almonds': { calories: 164, protein: 6, carbs: 6, fats: 14, serving: 'oz' },
+            'milk': { calories: 149, protein: 8, carbs: 12, fats: 8, serving: 'cup' },
+            'cheese': { calories: 113, protein: 7, carbs: 1, fats: 9, serving: 'oz' },
+            'chocolate': { calories: 155, protein: 2, carbs: 17, fats: 9, serving: 'oz' }
         };
 
         window.onload = function() {
@@ -1637,6 +1667,12 @@
             } else {
                 alert('Please fill in all fields');
             }
+        }
+
+        // Initialize nutrition on profile save
+        function saveProfileAndUpdateNutrition() {
+            saveProfile();
+            updateNutritionRecommendation();
         }
 
         // Friend System - Only Registered Users
@@ -2292,6 +2328,14 @@
             // Daily Calories = BMR × (1 + Activity_Factor) × Goal_Multiplier
             const recommendedCalories = Math.round(bmr * (1 + activityFactor) * goalMultiplier);
             
+            // Update the default daily goal if profile just saved
+            if (!nutritionGoals.customSet) {
+                nutritionGoals.daily = recommendedCalories;
+                document.getElementById('customDailyCalories').value = recommendedCalories;
+                document.getElementById('dailyCalorieGoalDisplay').textContent = recommendedCalories;
+                document.getElementById('displayDailyCalories').textContent = recommendedCalories + ' calories';
+            }
+            
             // Display recommendation with breakdown
             const recommendation = document.getElementById('nutritionRecommendation');
             
@@ -2334,7 +2378,7 @@
             const monthly = parseInt(document.getElementById('customMonthlyCalories').value);
             
             if (daily && weekly && monthly) {
-                nutritionGoals = { daily, weekly, monthly };
+                nutritionGoals = { daily, weekly, monthly, customSet: true };
                 document.getElementById('displayDailyCalories').textContent = daily + ' calories';
                 document.getElementById('displayWeeklyCalories').textContent = weekly + ' calories';
                 document.getElementById('displayMonthlyCalories').textContent = monthly + ' calories';
@@ -2342,7 +2386,7 @@
                 document.getElementById('weeklyCalorieGoalDisplay').textContent = weekly;
                 document.getElementById('monthlyCalorieGoalDisplay').textContent = monthly;
                 updateNutritionDisplay();
-                alert('Nutrition goals saved successfully!');
+                alert('✅ Nutrition goals saved successfully!\n\nNote: These are your custom goals. AI recommendation will still be calculated based on your activity.');
             }
         }
 
